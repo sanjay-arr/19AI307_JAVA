@@ -1,51 +1,80 @@
-# Ex.No:3(D) STRING TOKENIZER IN JAVA
+# Ex.No:3(D) INTERFACE 
+
+## QUESTION:
+Two types of traffic controllers decide whether a vehicle can pass based on signal color. The decision logic varies by controller.
+AggressiveController: Allows only if "GREEN".
+DefensiveController: Allows for "GREEN" or "YELLOW".
 
 ## AIM:
-To create a java program using StringTokenizer class that tokenizes a string "My name is Java Programming" on the basis of whitespace.
+To develop a Java program that decides whether a vehicle can move or must stop based on the signal color and the type of traffic controller (Aggressive or Defensive) using interfaces.
 
 ## ALGORITHM :
-1.	Start the Program
-2.	Import `Scanner` and `StringTokenizer` and define class `tok`
-3.	In `main`:
--	a) Create `Scanner` object `sc`
--	b) Initialize the string `str` as "My name is Java Programming"
-4.	Create a `StringTokenizer` object `token` to tokenize `str`
-5.	Use a `while` loop to iterate through tokens:
--	a) Print each token using `token.nextToken()`
-6.	End
-
-
-
+1. Define an interface `TrafficController` with the method:
+   - `boolean canGo(String signalColor)`
+2. Create class `AggressiveController` implementing the interface:
+   - Allows passage only if the signal color is GREEN.
+3. Create class `DefensiveController` implementing the interface:
+   - Allows passage if the signal color is GREEN or YELLOW.
+4. In the `main` method:
+   - Read `color` (signal color)
+   - Read `type` (controller type: 1 or 2)
+5. Based on `type`:
+   - If 1 → create `AggressiveController`
+   - Else → create `DefensiveController`
+6. Call `canGo(color)` to check permission.
+7. If true → print `"GO"`
+   - Else → print `"STOP"`
+8. End the program.
 
 ## PROGRAM:
- ```
+  ```
 /*
-Program to implement a String Tokenizer using Java
+Program to implement a conditional statement using Java
 Developed by: G Sanjay
-RegisterNumber: 212224230243
+RegisterNumber:  212224230243
 */
 ```
 
-## Sourcecode.java:
+## SOURCE CODE:
 ```
 import java.util.*;
-public class GFG {
-	public static void main(String[] args)
-	{
-	    Scanner sc=new Scanner(System.in);
-		String str = sc.nextLine();
-		String[] split = str.split(" ");
-		for (int i = 0; i < split.length; i++)
-			System.out.println(split[i]);
-	}
+
+interface TrafficController {
+    boolean canGo(String signalColor);
+}
+
+class AggressiveController implements TrafficController {
+    public boolean canGo(String signalColor) {
+        return signalColor.equalsIgnoreCase("GREEN");
+    }
+}
+
+class DefensiveController implements TrafficController {
+    public boolean canGo(String signalColor) {
+        return signalColor.equalsIgnoreCase("GREEN") || signalColor.equalsIgnoreCase("YELLOW");
+    }
+}
+
+public class prog {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String color = sc.next();
+        int type = sc.nextInt();
+
+        TrafficController ctrl = (type == 1) ? new AggressiveController() : new DefensiveController();
+
+        if (ctrl.canGo(color))
+            System.out.println("GO");
+        else
+            System.out.println("STOP");
+    }
 }
 ```
 
-
 ## OUTPUT:
-
-![image](https://github.com/user-attachments/assets/75834d6e-4726-4fab-a784-700c00296ddc)
-
+<img width="431" height="202" alt="image" src="https://github.com/user-attachments/assets/893c86c5-b2f8-4240-8d2b-98ca05b093a6" />
 
 ## RESULT:
-Thus the java program using StringTokenizer class that tokenizes a string "My name is Java Programming" on the basis of whitespace was executed successfully.
+The program successfully determines whether a vehicle can move based on the signal color and controller type using interface-based polymorphism.
+
+
