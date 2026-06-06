@@ -1,83 +1,94 @@
-# Ex.No:5(C)    GETTER AND SETTER METHOD
+# Ex.No:5(C) FILE HANDLING USING JAVA
+
+## QUESTION:
+Write a Java program to perform **file handling operations** and count the number of words in a file.
+
 
 ## AIM:
-To Create a java program to print fibonacci series for given number , to read and display the value with the help of setter and getter method.
+To write a Java program to demonstrate **file handling using FileWriter and BufferedReader** and count the number of words in a file.
+
 
 ## ALGORITHM :
-1. Start the program and import Scanner to take user input.
-
-2. Create a Fibonacci class with:
-
-3. A private int variable count.
-
-   Methods setCount(int) to set the number of terms and getCount() to retrieve it.
-   
-   A printSeries() method to generate and print the Fibonacci series using a loop.
-
-4. In the Main class:
-
-   Create a Scanner object and a Fibonacci object.
-   
-   Read an integer input from the user to decide how many terms to generate.
-   
-   Set the count in the Fibonacci object and call printSeries() to display the series.
-
-5. Close the Scanner and end the program.
+1. Start the program.  
+2. Import the necessary packages `java.io` and `java.util`.  
+3. Create a class `Main`.  
+4. Inside the `main()` method create a `Scanner` object.  
+5. Read a string input from the user.  
+6. Create a `FileWriter` object and write the input into a file (`sample.txt`).  
+7. Close the file after writing.  
+8. Open the file using `FileReader` and wrap it with `BufferedReader`.  
+9. Initialize a variable `count` to 0.  
+10. Read the file line by line using `readLine()`.  
+11. Split each line into words using `split(" ")`.  
+12. Count the number of words and store in `count`.  
+13. Close the file after reading.  
+14. Display the total number of words.  
+15. Stop the program.
 
 
 ## PROGRAM:
- ```
+
+```java
 /*
-Program to implement a Getter and Setter using Java
+Program to implement File Handling using Java
 Developed by: G Sanjay
 RegisterNumber: 212224230243
 */
-```
 
-## Sourcecode.java:
-```java
+import java.io.*;
 import java.util.Scanner;
 
-class Fibonacci {
-    private int count;
+public class Main{
+    public static void main(String[] args) throws Exception{
 
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void printSeries() {
-        int n1 = 0, n2 = 1;
-        for (int i = 0; i < count; i++) {
-            System.out.print(n1 + " ");
-            int next = n1 + n2;
-            n1 = n2;
-            n2 = next;
-        }
-    }
-}
-
-public class Main {
-    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        Fibonacci fib = new Fibonacci();
 
-        int input = sc.nextInt();
-        fib.setCount(input);
-        fib.printSeries();
+        String text = sc.nextLine();
+        
+        FileWriter fw = new FileWriter("sample.txt");
+        fw.write(text);
+        fw.close();
+        
+        BufferedReader br = new BufferedReader(new FileReader("sample.txt"));
 
-        sc.close();
+        int count = 0;
+        
+        while((text = br.readLine()) != null){
+            String[] words = text.split(" ");
+            count += words.length;
+        }
+        
+        br.close();
+        
+        System.out.println("Number of words in the file: " + count);
     }
 }
 ```
+
+
+## SOURCE CODE:
+
+Compile the program using
+
+```
+javac Main.java
+```
+
+Run the program using
+
+```
+java Main
+```
+
+---
 
 ## OUTPUT:
 
-![image](https://github.com/user-attachments/assets/3f2c59a9-3be2-4162-af36-f7a26eb2f318)
+<img width="947" height="229" alt="image" src="https://github.com/user-attachments/assets/0d385bd9-50d5-495d-8614-7cc7159f88c1" />
 
+
+---
 
 ## RESULT:
-Thus the java program to print fibonacci series for given number , to read and display the value with the help of setter and getter method.was executed successfully.
+
+Thus, the Java program to demonstrate **file handling and word count using FileWriter and BufferedReader** was executed successfully and the output was verified.
