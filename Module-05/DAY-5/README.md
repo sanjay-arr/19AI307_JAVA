@@ -1,75 +1,145 @@
-# Ex.No:5(E) HAS-A RELATIONSHIP
+# Ex.No:5(E) MULTITHREADING - SYNCHRONIZATION
+
+## QUESTION:
+Write a Java program to demonstrate **multithreading with synchronization** using `wait()` and `notify()`.
+
+
 ## AIM:
-To implement a java program for area of triangle with the help of getter and setter method and to print the value of area of triangle.
+To write a Java program to demonstrate **thread synchronization** using `synchronized`, `wait()`, and `notify()` methods.
+
+
 ## ALGORITHM :
+1. Start the program.  
+2. Import the necessary package `java.util`.  
+3. Create a class `Printer`.  
+4. Declare a boolean variable `helloTurn` to control execution.  
+5. Create a synchronized method `printHello()`:
+   - Wait if it is not hello’s turn.  
+   - Print "Hello".  
+   - Change turn and notify the other thread.  
+6. Create another synchronized method `printWorld()`:
+   - Wait if it is not world’s turn.  
+   - Print "World".  
+   - Change turn and notify the other thread.  
+7. Create a class `HelloThread` extending `Thread`.  
+8. Override `run()` to call `printHello()` `n` times.  
+9. Create a class `WorldThread` extending `Thread`.  
+10. Override `run()` to call `printWorld()` `n` times.  
+11. In the main class, read integer `n` from the user.  
+12. Create a `Printer` object.  
+13. Create two threads (`HelloThread` and `WorldThread`).  
+14. Start both threads.  
+15. Stop the program.
 
-1. Start the program and import Scanner for user input.
+---
 
-2. Create a TriangleArea class with:
-
-   Private variables width and height.
-   
-   Methods setWidth(double) and setHeight(double) to assign values.
-   
-   Method getArea() that returns the area by multiplying width and height.
-
-3. In the main method:
-
-   Create a Scanner object and a TriangleArea object.
-   
-   Read two double inputs from the user (for width and height).
-
-4. Set the width and height in the TriangleArea object and calculate the area.
-
-5. Print the area (after converting it to an integer) and close the scanner.
 ## PROGRAM:
- ```
+
+```java
 /*
-Program to implement a HAS-A RelationShip
+Program to implement Multithreading Synchronization using Java
 Developed by: G Sanjay
 RegisterNumber: 212224230243
 */
-```
 
-## Sourcecode.java:
+import java.util.*;
 
+class Printer {
+    private boolean helloTurn = true;
 
-```java
-import java.util.Scanner;
-public class TriangleArea {
+    public synchronized void printHello() {
+        try {
+            while (!helloTurn)
+                wait();
 
-    private double width;
-    private double height;
-
-    public void setWidth(double width) {
-        this.width = width;
+            System.out.println("Hello");
+            helloTurn = false;
+            notify();
+        } catch (Exception e) {}
     }
 
-    public void setHeight(double height) {
-        this.height = height;
-    }
+    public synchronized void printWorld() {
+        try {
+            while (helloTurn)
+                wait();
 
-    public double getArea() {
-        return width * height;
-    }
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        TriangleArea triangle = new TriangleArea();
-        double w = sc.nextDouble(); 
-        double h = sc.nextDouble(); 
-        triangle.setWidth(w);
-        triangle.setHeight(h);
-        System.out.println((int)triangle.getArea());
+            System.out.println("World");
+            helloTurn = true;
+            notify();
+        } catch (Exception e) {}
     }
 }
 
+class HelloThread extends Thread {
+    Printer p;
+    int n;
+
+    HelloThread(Printer p, int n) {
+        this.p = p;
+        this.n = n;
+    }
+
+    public void run() {
+        for (int i = 0; i < n; i++)
+            p.printHello();
+    }
+}
+
+class WorldThread extends Thread {
+    Printer p;
+    int n;
+
+    WorldThread(Printer p, int n) {
+        this.p = p;
+        this.n = n;
+    }
+
+    public void run() {
+        for (int i = 0; i < n; i++)
+            p.printWorld();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+
+        Printer p = new Printer();
+
+        Thread t1 = new HelloThread(p, n);
+        Thread t2 = new WorldThread(p, n);
+
+        t1.start();
+        t2.start();
+    }
+}
 ```
+
+
+## SOURCE CODE:
+
+Compile the program using
+
+```
+javac Main.java
+```
+
+Run the program using
+
+```
+java Main
+```
+
+
 
 ## OUTPUT:
 
-![image](https://github.com/user-attachments/assets/6761079b-9734-42e3-bbcd-705e07963810)
+<img width="200" height="600" alt="image" src="https://github.com/user-attachments/assets/cc2834aa-43bb-45ce-99f3-2966b164c933" />
+
 
 
 ## RESULT:
-Thus the java program to Find the Largest or Max Number in Array using has - a relationship was executed successfully.
+
+Thus, the Java program to demonstrate **multithreading with synchronization using wait() and notify()** was executed successfully and the output was verified.
