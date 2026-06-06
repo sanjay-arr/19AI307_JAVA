@@ -1,94 +1,139 @@
-# Ex.No:4(E)  PARAMETERIZED CONSTRUCTOR
+# Ex.No:4(E) DESIGN PATTERN ---- BEHAVIOUR PATTERN
+
+## QUESTION:
+Write a Java program to demonstrate a **Behavioral Design Pattern** using the **Observer Pattern**.
+
+---
+
 ## AIM:
-To write a parameterized constructor in the Laptop class given below that initializes the brand , price class field with the string "Apple" and 42500.75.
+To write a Java program to demonstrate the **Observer Pattern**, where multiple objects are notified when a change occurs.
 
-Call the getBrand() method in the main method of the Sample class  and store the value of the brand in a variable, and print the value.
-
-Call the getPrice() method in the main method of the Sample class  and store the value of the price in a variable, and print the value.
+---
 
 ## ALGORITHM :
+1. Start the program.  
+2. Import the necessary package `java.util`.  
+3. Create an interface `Observer` with a method `update()`.  
+4. Create a class `Subscriber` that implements the `Observer` interface.  
+5. Define a variable `name` and override the `update()` method.  
+6. Create a class `Channel` (Subject).  
+7. Declare a list to store observers (subscribers).  
+8. Create a method `subscribe()` to add observers.  
+9. Create a method `notifySubscribers()` to notify all observers.  
+10. Create a method `uploadVideo()` to simulate a change and notify observers.  
+11. In the main class, create a `Channel` object.  
+12. Read subscriber details and add them to the channel.  
+13. Read video title and call `uploadVideo()`.  
+14. Display notifications for each subscriber.  
+15. Stop the program.
 
-1. Start
-
-2. Define class Laptop:
-
-    Declare a String variable brand.
-    
-    Declare a double variable price.
-    
-    Create a constructor Laptop():
-    
-    Set brand to "Apple".
-    
-    Set price to 42500.75.
-
-3. Define a method getBrand():
-
-    Return the value of brand.
-    
-    Define a method getPrice():
-    
-    Return the value of price.
-
-4. Define class Sample:
-
-    In the main method:
-    
-        Create an object myLaptop of class Laptop.
-        
-        Call getBrand() method using myLaptop and store the result in laptopBrand.
-        
-        Print laptopBrand.
-        
-        Call getPrice() method using myLaptop and store the result in laptopPrice.
-        
-        Print laptopPrice.
-
-5. End
-
+---
 
 ## PROGRAM:
- ```
+
+```java
 /*
-Program to implement a Parameterized Constructor Using Java
+Program to implement Behaviour Pattern using Java (Observer Pattern)
 Developed by: G Sanjay
 RegisterNumber: 212224230243
 */
-```
 
-## Sourcecode.java:
+import java.util.*;
 
-```
-class Laptop {
-    String brand;
-    double price;
-    public Laptop() {
-        this.brand = "Apple";
-        this.price = 42500.75;
+interface Observer {
+    void update(String channelName, String videoTitle);
+}
+
+class Subscriber implements Observer {
+    private String name;
+
+    public Subscriber(String name) {
+        this.name = name;
     }
 
-    public String getBrand() {
-        return brand;
-    }
-
-    public double getPrice() {
-        return price;
+    public void update(String channelName, String videoTitle) {
+        System.out.println(name + " received notification: " + channelName + " uploaded " + videoTitle);
     }
 }
-public class Sample {
+
+class Channel {
+    private String channelName;
+    private List<Observer> subscribers = new ArrayList<>();
+
+    public Channel(String name) {
+        this.channelName = name;
+    }
+
+    public void subscribe(Observer o) {
+        subscribers.add(o);
+    }
+
+    public void notifySubscribers(String videoTitle) {
+        for (Observer o : subscribers) {
+            o.update(channelName, videoTitle);
+        }
+    }
+
+    public void uploadVideo(String videoTitle) {
+        System.out.println(channelName + " uploaded: " + videoTitle);
+        notifySubscribers(videoTitle);
+    }
+}
+
+public class Main {
     public static void main(String[] args) {
-        Laptop myLaptop = new Laptop();
-        String laptopBrand = myLaptop.getBrand();
-        System.out.println(laptopBrand);
-        double laptopPrice = myLaptop.getPrice();
-        System.out.println(laptopPrice);
+        Scanner sc = new Scanner(System.in);
+
+        String channelName = sc.nextLine();
+        Channel channel = new Channel(channelName);
+
+        int n = sc.nextInt();
+        sc.nextLine();
+
+        for (int i = 0; i < n; i++) {
+            String name = sc.nextLine();
+            channel.subscribe(new Subscriber(name));
+        }
+
+        String videoTitle = sc.nextLine();
+        channel.uploadVideo(videoTitle);
     }
 }
 ```
+
+---
+
+## SOURCE CODE:
+
+Compile the program using
+
+```
+javac Main.java
+```
+
+Run the program using
+
+```
+java Main
+```
+
+---
+
 ## OUTPUT:
 
-![image](https://github.com/user-attachments/assets/dd258499-d8e9-427a-97a0-9157d4055a30)
+```
+TechWorld
+2
+Hari
+Priya
+Java Basics
+TechWorld uploaded: Java Basics
+Hari received notification: TechWorld uploaded Java Basics
+Priya received notification: TechWorld uploaded Java Basics
+```
 
+---
 
 ## RESULT:
-Thus, the  java program was successfully parameterized constructor in the Laptop class given below that initializes the brand , price class field with the string "Apple" and 42500.75.
+
+Thus, the Java program to demonstrate the **Behavioral Design Pattern (Observer Pattern)** was executed successfully and the output was verified.
