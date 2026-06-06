@@ -1,55 +1,70 @@
-# Ex.No:1(C) CONTROL STATEMENTS
+# Ex.No:1(C) LOOPING STATEMENT
 
+## QUESTION:
+Construct a right-angled triangle star pattern using for loop.
 ## AIM:
-To develop a Java program to check given number is zero or not.
+To write a Java program using looping statements to print a right-angled triangle star pattern based on user input.
 
 ## ALGORITHM :
 1.	Start the program.
-2.	Declare an integer variable 'num'
-3.	Create a Scanner object 'sc' to read input from the user
-4.	Read an integer input from the user and store it in 'num'
-5.	Check if 'num' is equal to 0:
-a.	If true, print "Given number is Zero"
-b.	If false, print 'num' followed by " is Non-Zero"
-6.	End
 
+2.	Import the necessary package 'java.util'
 
+3. Read the number of rows from the user.
 
+4. Use an outer loop to iterate through each row.
+
+5. Use an inner loop to print stars (*) for each row.
+
+6. Move to the next line after printing stars for each row.
+
+7. End the program.
 
 
 ## PROGRAM:
  ```
 /*
-Program to implement a class & objects using Java
+Program to implement a Looping Statement using Java
 Developed by: G Sanjay
-RegisterNumber: 212224230243
+Register Number:212224230243
 */
 ```
 
-## Sourcecode.java:
-```
-import java.util.Scanner;
+## SOURCE CODE:
 
-public class Demo
+```
+import java.util.*;
+public class TrianglePattern
 {
-    public static void main(String[] args)
+    public static void main(String args[])
     {
-       Scanner sc=new Scanner(System.in);
-       int num=sc.nextInt();
-        if(num==0)
-        System.out.println("Given number is Zero");
-        else
-        {
-        	 System.out.println(num+ " is Non-Zero");
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        for (int i = 1; i <= n; i++) 
+        {         
+            for (int j = 1; j <= i; j++) 
+            {      
+                System.out.print("* ");
+            }
+            System.out.println();              
         }
     }
 }
-
 ```
-## OUTPUT:
 
-![image](https://github.com/user-attachments/assets/2ce116ff-7c08-480d-af64-1c7f658acefb)
+
+
+
+## OUTPUT:
+<img width="399" height="395" alt="image" src="https://github.com/user-attachments/assets/07286d0c-5174-4702-8d58-34b630bd23d6" />
+
 
 
 ## RESULT:
-Thus, the Java program to check given number is zero or not was created successfully.
+Thus, the Java program using looping statements to print a right-angled triangle star pattern was successfully written, executed, and verified.
+
+
+
+
+
+
