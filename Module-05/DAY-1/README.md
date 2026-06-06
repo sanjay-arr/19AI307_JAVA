@@ -1,87 +1,77 @@
-# Ex.No:5(A)  DATA HIDING AND ENCAPSULATION
+# Ex.No:5(A) INPUTSTREAMREADER
+
+## QUESTION:
+Write a Java program to read input from the user using **InputStreamReader**.
+
+
+
 ## AIM:
-To Create a java program to display the age of the person.Use access modifier private to achieve the data hiding concepts.
+To write a Java program to demonstrate **reading input using InputStreamReader and BufferedReader**.
+
+
 
 ## ALGORITHM :
-1. Start
+1. Start the program.  
+2. Import the necessary packages `java.io`.  
+3. Create a class `Main`.  
+4. Inside the `main()` method create an object of `InputStreamReader`.  
+5. Wrap it using `BufferedReader` to read input efficiently.  
+6. Read a string input using `readLine()`.  
+7. Display the entered input.  
+8. Handle exceptions using `throws IOException`.  
+9. Stop the program.
 
-2.  Import the Scanner class for input.
-
-3. Define class Person:
-
-   Declare a private int variable age.
-   
-   Create a method setAge(int age):
-   
-   Assign the input parameter age to the instance variable age.
-   
-   Create a method getAge():
-   
-   Return the value of age.
-
-4. Define class Main:
-
-   In the main method:
-   
-   Create a Scanner object scanner to read user input.
-   
-   Create an object p of class Person.
-   
-   Read an integer from the user and store it in inputAge.
-   
-   Call p.setAge(inputAge) to set the age in the Person object.
-   
-   Print "My age is " followed by the value returned by p.getAge().
-   
-   Close the scanner.
-
-5. End
 
 
 ## PROGRAM:
- ```
+
+```java
 /*
-Program to implement a Data Hiding & Encapsulation using Java
+Program to implement InputStreamReader using Java
 Developed by: G Sanjay
 RegisterNumber: 212224230243
 */
-```
 
-## Sourcecode.java:
+import java.io.*;
 
-```java
-import java.util.Scanner;
+public class Main{
+    public static void main(String[] args) throws IOException{
 
-class Person {
-    private int age;
+        InputStreamReader isr = new InputStreamReader(System.in);
+        BufferedReader br = new BufferedReader(isr);
 
-    public void setAge(int age) {
-        this.age = age;
-    }
+        String input = br.readLine();
 
-    public int getAge() {
-        return age;
-    }
-}
-
-public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        Person p = new Person();
-
-        int inputAge = scanner.nextInt();
-        p.setAge(inputAge);
-
-        System.out.println("My age is " + p.getAge());
-        scanner.close();
+        System.out.println("You entered: " + input);
     }
 }
 ```
+
+
+## SOURCE CODE:
+
+Compile the program using
+
+```
+javac Main.java
+```
+
+Run the program using
+
+```
+java Main
+```
+
+---
 
 ## OUTPUT:
 
-![image](https://github.com/user-attachments/assets/781fdc29-385a-4a25-bdb3-72d4c304f256)
+```
+Hello Java
+You entered: Hello Java
+```
 
 
 ## RESULT:
-Thus , the  java program to display the age of the person.Use access modifier private to achieve the data hiding concepts.
+
+Thus, the Java program to read input using **InputStreamReader and BufferedReader** was executed successfully and the output was verified.
