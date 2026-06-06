@@ -1,90 +1,89 @@
-# Ex.No:4(C)    CONSTRUCTOR CHAINING(SUPER KEYWORD)
+# Ex.No:4(C)  COMPOSITION IN JAVA
+
+## QUESTION:
+Create animals from two regions: "Africa" and "Asia". Use Abstract Factory to create families of animals (Herbivore, Carnivore). Print the interaction result.
+
+
 
 ## AIM:
-To Create a class named 'Gadgets' which includes methods display(). [display() will print "I am a Gadget"]
-
-Create a child class of 'Gadgets' named 'Laptop' and add a new overriding method named display() [display() will print "I am a Laptop"]  and print(). [ print() calls both overriding and overridden methods]
-
-Create a instance of Laptop class and invoke the print method using object.
+To write a Java program demonstrating Composition and Abstract Factory Pattern by creating animal families of different regions and displaying interactions between herbivores and carnivores.
 
 ## ALGORITHM :
-
-Step 1: Start
-
-Step 2: Define a class Gadgets
-
-a. Create a method display()
-
-b. Inside display(), print "I am a Gadget"
-
-Step 3: Define a class Parrot that extends Gadgets
-
-a. Override the display() method
-
-b. Inside the overridden display(), print "I am a Laptop"
-
-c. Create a new method print()
-
-d. Inside print(), use super.display() to call the parent class (Gadgets) version of display()
-
-Step 4: Define the Main class with main() method
-
-a. Create an object obj of class Parrot
-
-b. Call obj.display() → Executes Parrot class's display() method
-
-c. Call obj.print() → Executes Parrot class's print() method, which in turn calls Gadgets class's display() method using super
-
-Step 5: End
-
-
+1.	Start the program.
+2.	Import the necessary package 'java.util'
+3.	Create interfaces Herbivore and Carnivore.
+4. Create concrete animal classes (e.g., Wildebeest, Lion, Deer, Tiger) implementing those interfaces.
+5. Create an abstract factory class for producing families of animals.
+6. Implement region-based factories (AfricaFactory, AsiaFactory).
+7. In the main program, instantiate factories and show interactions.
+8. Print the result.
+9. Stop the program.
 
 ## PROGRAM:
  ```
 /*
-Program to implement a Constructor Chaining using Java
+Program to implement a Composition Concepts in Java
 Developed by: G Sanjay
-RegisterNumber: 212224230243
+RegisterNumber:212224230243
 */
 ```
 
-## Sourcecode.java:
-
+## SOURCE CODE:
 ```
+import java.util.Scanner;
 
-class Gadgets {
-
-  //Write Your code Here
-  void display()
-  {
-      System.out.println("I am a Gadget");
-  }
+interface Herbivore {}
+interface Carnivore {
+    void eat(Herbivore h);
 }
 
-class Parrot extends Gadgets {
+class Wildebeest implements Herbivore {}
+class Lion implements Carnivore {
+    public void eat(Herbivore h) {
+        System.out.println("Lion eats Wildebeest");
+    }
+}
 
-//Write Your code Here  
-void display()
-{
-    System.out.println("I am a Laptop");
+class Buffalo implements Herbivore {}
+class Tiger implements Carnivore {
+    public void eat(Herbivore h) {
+        System.out.println("Tiger eats Buffalo");
+    }
 }
-void print()
-{
-    super.display();
+
+interface AnimalFactory {
+    Herbivore createHerbivore();
+    Carnivore createCarnivore();
 }
-  
+
+class AfricaFactory implements AnimalFactory {
+    public Herbivore createHerbivore() { return new Wildebeest(); }
+    public Carnivore createCarnivore() { return new Lion(); }
+}
+
+class AsiaFactory implements AnimalFactory {
+    public Herbivore createHerbivore() { return new Buffalo(); }
+    public Carnivore createCarnivore() { return new Tiger(); }
 }
 
 public class Main {
-  public static void main(String[] args) {
-      
-      //Write Your code Here
-      Parrot obj=new Parrot();
-      obj.display();
-      obj.print();
-  }
-}
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String region = sc.nextLine().toLowerCase();
+        AnimalFactory factory;
 
+        if (region.equals("africa")) factory = new AfricaFactory();
+        else if (region.equals("asia")) factory = new AsiaFactory();
+        else {
+            System.out.println("Invalid region");
+            return;
+        }
+
+        Carnivore carn = factory.createCarnivore();
+        Herbivore herb = factory.createHerbivore();
+        carn.eat(herb);
+    }
+}
 ```
 
 
@@ -93,8 +92,9 @@ public class Main {
 
 ## OUTPUT:
 
-![image](https://github.com/user-attachments/assets/240c300f-e074-4f6e-ba85-ca586e2ca81c)
-
+![java43](https://github.com/ABINAYA-27-76/19AI307_ODD-25-26-/blob/8b4be1e27b6fb5da0aa68915801ab1e6c9c7174e/19AI307_JAVA(25-26)/Module-04/DAY-3/java43.png)
 
 ## RESULT:
-Thus the java program to To Create a class named 'Gadgets' which includes methods display(). [display() will print "I am a Gadget"] Create a child class of 'Gadgets' named 'Laptop' and add a new overriding method named display() [display() will print "I am a Laptop"]  and print(). [ print() calls both overriding and overridden methods] Create a instance of Laptop class and invoke the print method using object. was executed successfully.
+Thus, the program using Composition and Abstract Factory Pattern was successfully implemented and executed to create animal interactions for African and Asian regions.
+
+
