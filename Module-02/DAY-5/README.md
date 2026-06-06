@@ -1,61 +1,174 @@
-# Ex.No:2(E)  LARGEST ELEMENT IN AN ARRAY
+# Ex.No:3(A) INHERITANCE AND AGGREGATION
+
+## QUESTION:
+A jewelry store tracks gold rates for different types of customers. The base class is Customer with attributes like customerId, name, and purchaseWeight (in grams). There are two types of customers: RegularCustomer and PremiumCustomer. RegularCustomer gets a fixed discount of 2% on the gold rate per gram. PremiumCustomer gets a 5% discount plus a special cashback. The base gold rate per gram is input at runtime. For each customer, calculate the final price they pay:
+
+       
+       
+      finalPrice = purchaseWeight * (goldRatePerGram - discount)
+
+
+For PremiumCustomer, additionally show cashback amount (which is 1% of the final price).
 
 ## AIM:
-To Write a Java program to find the largest element in an array and then print the largest value. 
+To build an inheritance-based Java program that calculates the final price of gold for different types of customers (Regular and Premium), applying respective discounts and showing cashback for premium customers.
+
 ## ALGORITHM :
-1.Start
+1. Create a base class Customer with attributes: customerId, name, purchaseWeight, and goldRatePerGram.
 
-2.Input the size of the array (let's call it size)
+2. Create method getDiscountRate() in base class returning 0 (default).
 
-3.Create an integer array of length size
+3. Create method calculateFinalPrice() that:
 
-4.Loop from i = 0 to size - 1:,Input the i-th element and store it in the array
+        calculates discount per gram → discountAmount = goldRatePerGram * (discountRate/100)
 
-5.Initialize a variable largest with the first element of the array
+        calculates effective rate → effectiveRate = goldRatePerGram - discountAmount
 
-6.Loop from i = 1 to size - 1:,If the current element array[i] is greater than largest:,Update largest = array[i]
+  returns → finalPrice = purchaseWeight * effectiveRate
 
-7.Output the value of largest as the largest element
+4. Override display() in base class to show general customer details.
 
-8.End
-	
+5. Create child class RegularCustomer:
+
+       Override getDiscountRate() to return 2%.
+
+       Override display() to show customer type as Regular.
+
+6. Create child class PremiumCustomer:
+
+       Override getDiscountRate() to return 5%.
+
+7.  Add calculateCashback() → returns 1% of final price.
+
+8.  Override display() to show final price + cashback.
+
+9.  Call display() to show the complete bill with discounts.
+
+
+
+
 
 ## PROGRAM:
  ```
 /*
-Program to implement a Largest Element in an Array
+Program to implement a Inheritance and Aggregation using Java
 Developed by: G Sanjay
-RegisterNumber: 212224230243
+Register Number:212224230243
 */
 ```
 
-## Sourcecode.java:
-
+## SOURCE CODE:
 ```
 import java.util.Scanner;
+import java.text.DecimalFormat;
 
-public class LargestElement {
+class Customer {
+    String customerId, name;
+    double purchaseWeight, goldRatePerGram;
+
+    Customer(String customerId, String name, double purchaseWeight, double goldRatePerGram) {
+        this.customerId = customerId;
+        this.name = name;
+        this.purchaseWeight = purchaseWeight;
+        this.goldRatePerGram = goldRatePerGram;
+    }
+
+    double getDiscountRate() {
+        return 0;
+    }
+
+    double calculateFinalPrice() {
+        double discountAmount = goldRatePerGram * getDiscountRate() / 100;
+        double effectiveRate = goldRatePerGram - discountAmount;
+        return purchaseWeight * effectiveRate;
+    }
+
+    void display() {
+        DecimalFormat df = new DecimalFormat("0.00");
+        System.out.println("Customer ID: " + customerId);
+        System.out.println("Name: " + name);
+        System.out.println("Customer Type: General");
+        System.out.println("Purchase Weight: " + purchaseWeight + " grams");
+        System.out.println("Gold Rate per Gram: " + goldRatePerGram);
+        System.out.println("Discount: " + getDiscountRate() + "%");
+        System.out.println("Final Price: " + df.format(calculateFinalPrice()));
+        
+    }
+}
+
+class RegularCustomer extends Customer {
+
+    RegularCustomer(String customerId, String name, double purchaseWeight, double goldRatePerGram) {
+        super(customerId, name, purchaseWeight, goldRatePerGram);
+    }
+
+    @Override
+    double getDiscountRate() {
+        return 2.0;
+    }
+
+    @Override
+    void display() {
+        DecimalFormat df = new DecimalFormat("0.00");
+        System.out.println("Customer ID: " + customerId);
+        System.out.println("Name: " + name);
+        System.out.println("Customer Type: Regular");
+        System.out.println("Purchase Weight: " + purchaseWeight + " grams");
+        System.out.println("Gold Rate per Gram: " + goldRatePerGram);
+        System.out.println("Discount: 2%");
+        System.out.println("Final Price: " + df.format(calculateFinalPrice()));
+       
+    }
+}
+
+class PremiumCustomer extends Customer {
+
+    PremiumCustomer(String customerId, String name, double purchaseWeight, double goldRatePerGram) {
+        super(customerId, name, purchaseWeight, goldRatePerGram);
+    }
+
+    @Override
+    double getDiscountRate() {
+        return 5.0;
+    }
+
+    double calculateCashback() {
+        return calculateFinalPrice() * 0.01;
+    }
+
+    @Override
+    void display() {
+        DecimalFormat df = new DecimalFormat("0.00");
+        System.out.println("Customer ID: " + customerId);
+        System.out.println("Name: " + name);
+        System.out.println("Customer Type: Premium");
+        System.out.println("Purchase Weight: " + purchaseWeight + " grams");
+        System.out.println("Gold Rate per Gram: " + goldRatePerGram);
+        System.out.println("Discount: 5%");
+        System.out.println("Final Price: " + df.format(calculateFinalPrice()));
+        System.out.println("Cashback: " + df.format(calculateCashback()));
+        
+    }
+}
+
+public class GoldRateSystem {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
-        int size = scanner.nextInt();
-        int[] array = new int[size];
-
-        for (int i = 0; i < size; i++) {
-            array[i] = scanner.nextInt();
+        // Input 1
+        String type1 = sc.next();
+        Customer cust1;
+        if (type1.equalsIgnoreCase("Regular")) {
+            cust1 = new RegularCustomer(sc.next(), sc.next(), sc.nextDouble(), sc.nextDouble());
+        } else {
+            cust1 = new PremiumCustomer(sc.next(), sc.next(), sc.nextDouble(), sc.nextDouble());
         }
 
-        int largest = array[0]; // Assume the first element is the largest initially
+        
+        cust1.display();
+     
 
-        for (int i = 1; i < size; i++) {
-            if (array[i] > largest) {
-                largest = array[i];
-            }
-        }
-
-        System.out.println("The largest element in the array is: " + largest);
-
-        scanner.close();
+        sc.close();
     }
 }
 ```
@@ -63,11 +176,14 @@ public class LargestElement {
 
 
 
-
 ## OUTPUT:
+<img width="884" height="700" alt="image" src="https://github.com/user-attachments/assets/bc4bc233-2418-404a-88cc-490c1d83bc24" />
 
-![image](https://github.com/user-attachments/assets/87908cbe-caef-4359-951a-178115c6dbdc)
 
 
 ## RESULT:
-Thus the java program successfully reads the array size and elements from the user and correctly finds and prints the largest number in the array.
+Therefore the program successfully applies different discount rules for regular and premium customers.
+
+
+
+
